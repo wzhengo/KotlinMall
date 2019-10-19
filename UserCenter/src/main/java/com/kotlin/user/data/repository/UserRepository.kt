@@ -5,12 +5,13 @@ import com.kotlin.base.data.protocol.BaseResp
 import com.kotlin.user.data.api.UserApi
 import com.kotlin.user.data.protocol.RegisterReq
 import rx.Observable
+import javax.inject.Inject
 
 /**
  * @author wangzhen
  * @date 2019/10/18
  */
-class UserRepository {
+class UserRepository @Inject constructor(){
 
     fun register(mobile: String, verifyCode: String, pwd: String): Observable<BaseResp<String>> {
         return RetrofitFactory.instance.create(UserApi::class.java)
