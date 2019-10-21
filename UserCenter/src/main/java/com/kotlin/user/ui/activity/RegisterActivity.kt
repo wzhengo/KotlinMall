@@ -1,6 +1,7 @@
 package com.kotlin.user.ui.activity
 
 import android.os.Bundle
+import com.kotlin.base.ext.onClick
 import com.kotlin.base.ui.activity.BaseMvpActivity
 import com.kotlin.user.R
 import com.kotlin.user.injection.component.DaggerUserComponent
@@ -13,24 +14,22 @@ import org.jetbrains.anko.toast
 class RegisterActivity : BaseMvpActivity<RegisterPresenter>(), RegisterView {
 
 
-    override fun onRegisterResult(result: Boolean) {
-        toast("注册成功")
+    override fun onRegisterResult(result: String) {
+        toast(result)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        initInjection()
-
-        mRegisterBtn.setOnClickListener {
+        mRegisterBtn.onClick {
 //            mPresenter.register(mMobileEt.text.toString(), mVerifyCodeEt.text.toString(), mPwdEt.text.toString())
             mPresenter.register("", "", "")
         }
 
     }
 
-    private fun initInjection() {
+    override fun injectComponent() {
         DaggerUserComponent.builder()
             .activityComponent(activityComponent)
             .userModule(UserModule()).build().inject(this)

@@ -1,4 +1,4 @@
-package com.kotlin.base.ui.activity
+package com.kotlin.base.ui.fragment
 
 import android.os.Bundle
 import com.kotlin.base.common.BaseApplication
@@ -8,13 +8,14 @@ import com.kotlin.base.injection.module.ActivityModule
 import com.kotlin.base.injection.module.LifecycleProviderModule
 import com.kotlin.base.presenter.BasePresenter
 import com.kotlin.base.presenter.view.BaseView
+import org.jetbrains.anko.support.v4.act
 import javax.inject.Inject
 
 /**
  * @author wangzhen
  * @date 2019/10/17
  */
-abstract class BaseMvpActivity<T : BasePresenter<*>> : BaseActivity(), BaseView {
+abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), BaseView {
 
     override fun showLoading() {
     }
@@ -39,10 +40,11 @@ abstract class BaseMvpActivity<T : BasePresenter<*>> : BaseActivity(), BaseView 
 
     abstract fun injectComponent()
 
+
     private fun initActivityInjection() {
         activityComponent = DaggerActivityComponent.builder()
-            .appComponent((application as BaseApplication).appComponent)
-            .activityModule(ActivityModule(this))
+            .appComponent((act.application as BaseApplication).appComponent)
+            .activityModule(ActivityModule(act))
             .lifecycleProviderModule(LifecycleProviderModule(this))
             .build()
     }
