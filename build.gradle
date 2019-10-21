@@ -13,6 +13,8 @@ buildscript {
 
     ext.dagger_version = '2.11'
 
+    ext.rx_lifecycle_version = '1.0'
+
     repositories {
         google()
         jcenter()

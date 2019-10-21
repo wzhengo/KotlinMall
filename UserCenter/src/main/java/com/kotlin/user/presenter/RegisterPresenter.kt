@@ -11,7 +11,7 @@ import javax.inject.Inject
  * @author wangzhen
  * @date 2019/10/17
  */
-class RegisterPresenter @Inject constructor(): BasePresenter<RegisterView>() {
+class RegisterPresenter @Inject constructor() : BasePresenter<RegisterView>() {
 
     @Inject
     lateinit var userService: UserService
@@ -25,7 +25,7 @@ class RegisterPresenter @Inject constructor(): BasePresenter<RegisterView>() {
                 override fun onNext(t: Boolean) {
                     mView.onRegisterResult(t)
                 }
-            })
+            }, lifecycleProvider)
 
     }
 }

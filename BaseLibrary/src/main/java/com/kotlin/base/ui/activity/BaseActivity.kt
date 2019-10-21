@@ -1,10 +1,10 @@
 package com.kotlin.base.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 
 /**
  * @author wangzhen
  * @date 2019/10/17
  */
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity : RxAppCompatActivity() {
 }
