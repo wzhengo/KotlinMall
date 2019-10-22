@@ -1,5 +1,6 @@
 package com.kotlin.user.presenter
 
+import android.util.Log
 import com.kotlin.base.ext.execute
 import com.kotlin.base.presenter.BasePresenter
 import com.kotlin.base.rx.BaseSubscriber
@@ -20,8 +21,14 @@ class RegisterPresenter @Inject constructor() : BasePresenter<RegisterView>() {
         /**
          * 业务逻辑
          */
+        if (!checkNetWork()) {
+            Log.e("RegisterPresenter", "网络不可用")
+            return
+        }
+        mView.showLoading()
+
         userService.register(mobile, verifyCode, pwd)
-            .execute(object : BaseSubscriber<Boolean>() {
+            .execute(object : BaseSubscriber<Boolean>(mView) {
                 override fun onNext(t: Boolean) {
                     if (t) {
                         mView.onRegisterResult("注册成功")
