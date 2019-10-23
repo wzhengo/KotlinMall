@@ -1,6 +1,5 @@
 package com.kotlin.user.presenter
 
-import android.util.Log
 import com.kotlin.base.ext.execute
 import com.kotlin.base.presenter.BasePresenter
 import com.kotlin.base.rx.BaseSubscriber
@@ -21,8 +20,7 @@ class RegisterPresenter @Inject constructor() : BasePresenter<RegisterView>() {
         /**
          * 业务逻辑
          */
-        if (!checkNetWork()) {
-            Log.e("RegisterPresenter", "网络不可用")
+        if (! checkNetWork()) {
             return
         }
         mView.showLoading()

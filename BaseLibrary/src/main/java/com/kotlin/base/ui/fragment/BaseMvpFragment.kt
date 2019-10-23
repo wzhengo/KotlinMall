@@ -9,6 +9,7 @@ import com.kotlin.base.injection.module.LifecycleProviderModule
 import com.kotlin.base.presenter.BasePresenter
 import com.kotlin.base.presenter.view.BaseView
 import org.jetbrains.anko.support.v4.act
+import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 /**
@@ -16,15 +17,6 @@ import javax.inject.Inject
  * @date 2019/10/17
  */
 abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), BaseView {
-
-    override fun showLoading() {
-    }
-
-    override fun hideLoading() {
-    }
-
-    override fun onError() {
-    }
 
     lateinit var activityComponent: ActivityComponent
 
@@ -47,5 +39,15 @@ abstract class BaseMvpFragment<T : BasePresenter<*>> : BaseFragment(), BaseView 
             .activityModule(ActivityModule(act))
             .lifecycleProviderModule(LifecycleProviderModule(this))
             .build()
+    }
+
+    override fun showLoading() {
+    }
+
+    override fun hideLoading() {
+    }
+
+    override fun onError(text: String) {
+        toast(text)
     }
 }
