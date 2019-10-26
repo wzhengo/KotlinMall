@@ -25,8 +25,11 @@ class RegisterActivity : BaseMvpActivity<RegisterPresenter>(), RegisterView {
         setContentView(R.layout.activity_register)
 
         mRegisterBtn.onClick {
-//            mPresenter.register(mMobileEt.text.toString(), mVerifyCodeEt.text.toString(), mPwdEt.text.toString())
-            mPresenter.register("", "", "")
+            mPresenter.register(mMobileEt.text.toString(), mVerifyCodeEt.text.toString(), mPwdEt.text.toString())
+        }
+
+        mVerifyCodeBtn.onClick {
+            mVerifyCodeBtn.requestSendVerifyNumber()
         }
 
     }

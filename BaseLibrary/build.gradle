@@ -34,6 +34,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
+    //Android Support
+    api "com.android.support:recyclerview-v7:${android_support_version}"
+
     // Anko Commons
     api "org.jetbrains.anko:anko-commons:$anko_version"
     // Support-v4 (only Anko Commons)
@@ -53,4 +56,6 @@ dependencies {
     //RxLifecycle
     api "com.trello:rxlifecycle-kotlin:$rx_lifecycle_version"
     api "com.trello:rxlifecycle-components:$rx_lifecycle_version"
+    //Glide
+    api "com.github.bumptech.glide:glide:$glide_version"
 }
