@@ -4,10 +4,11 @@
     android:background="@drawable/progress_dialog_bg"
     android:gravity="center_horizontal"
     android:padding="40dp">
+
     <ImageView
         android:id="@+id/iv_loading"
         style="@style/WrapWrap"
         android:layout_gravity="center"
-        android:background="@drawable/progress_dialog_anim"/>
+        android:background="@drawable/progress_dialog_anim" />
 
 </LinearLayout>
