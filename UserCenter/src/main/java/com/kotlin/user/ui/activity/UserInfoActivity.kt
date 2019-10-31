@@ -21,15 +21,20 @@ import com.jph.takephoto.permission.TakePhotoInvocationHandler
 import com.kotlin.base.common.BaseConstant
 import com.kotlin.base.ext.onClick
 import com.kotlin.base.ui.activity.BaseMvpActivity
+import com.kotlin.base.utils.AppPrefsUtils
 import com.kotlin.base.utils.DateUtils
 import com.kotlin.base.utils.GlideUtils
+import com.kotlin.provider.common.ProviderConstant
 import com.kotlin.user.R
+import com.kotlin.user.data.protocol.UserInfo
 import com.kotlin.user.injection.component.DaggerUserComponent
 import com.kotlin.user.injection.module.UserModule
 import com.kotlin.user.presenter.UserInfoPresenter
 import com.kotlin.user.presenter.view.UserInfoView
+import com.kotlin.user.utils.UserPrefsUtils
 import com.qiniu.android.storage.UploadManager
 import kotlinx.android.synthetic.main.activity_user_info.*
+import org.jetbrains.anko.toast
 import java.io.File
 
 
@@ -60,6 +65,7 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView, Vie
         mTakePhoto = getTakePhoto()
         mTakePhoto.onCreate(savedInstanceState)
         initView()
+        initData()
     }
 
     /*
@@ -69,6 +75,50 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView, Vie
         mUserIconView.onClick {
             showAlertView()
         }
+
+        mHeaderBar.getRightView().onClick {
+            mPresenter.editUser(
+                mRemoteFileUrl!!,
+                mUserNameEt.text?.toString() ?: "",
+                if (mGenderMaleRb.isChecked) "0" else "1",
+                mUserSignEt.text?.toString() ?: ""
+            )
+        }
+    }
+
+    /*
+    初始化数据
+ */
+    private fun initData() {
+        mUserIcon = AppPrefsUtils.getString(ProviderConstant.KEY_SP_USER_ICON)
+        mUserName = AppPrefsUtils.getString(ProviderConstant.KEY_SP_USER_NAME)
+        mUserMobile = AppPrefsUtils.getString(ProviderConstant.KEY_SP_USER_MOBILE)
+        mUserGender = AppPrefsUtils.getString(ProviderConstant.KEY_SP_USER_GENDER)
+        mUserSign = AppPrefsUtils.getString(ProviderConstant.KEY_SP_USER_SIGN)
+
+        mRemoteFileUrl = mUserIcon
+        if (!mUserIcon.isNullOrEmpty()) {
+            GlideUtils.loadUrlImage(this, mUserIcon!!, mUserIconIv)
+        }
+        mUserNameEt.setText(mUserName)
+        mUserMobileTv.text = mUserMobile
+
+        if (mUserGender == "0") {
+            mGenderMaleRb.isChecked = true
+        } else {
+            mGenderFemaleRb.isChecked = true
+        }
+
+        mUserSignEt.setText(mUserSign)
+
+    }
+
+    /*
+    编辑用户资料回调
+ */
+    override fun onEditUserResult(result: UserInfo) {
+        toast("修改成功")
+        UserPrefsUtils.putUserInfo(result)
     }
 
     private fun showAlertView() {
