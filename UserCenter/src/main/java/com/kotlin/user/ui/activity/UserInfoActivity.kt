@@ -18,14 +18,17 @@ import com.jph.takephoto.permission.InvokeListener
 import com.jph.takephoto.permission.PermissionManager
 import com.jph.takephoto.permission.PermissionManager.TPermissionType
 import com.jph.takephoto.permission.TakePhotoInvocationHandler
+import com.kotlin.base.common.BaseConstant
 import com.kotlin.base.ext.onClick
 import com.kotlin.base.ui.activity.BaseMvpActivity
 import com.kotlin.base.utils.DateUtils
+import com.kotlin.base.utils.GlideUtils
 import com.kotlin.user.R
 import com.kotlin.user.injection.component.DaggerUserComponent
 import com.kotlin.user.injection.module.UserModule
 import com.kotlin.user.presenter.UserInfoPresenter
 import com.kotlin.user.presenter.view.UserInfoView
+import com.qiniu.android.storage.UploadManager
 import kotlinx.android.synthetic.main.activity_user_info.*
 import java.io.File
 
@@ -40,6 +43,16 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView, Vie
     private lateinit var mTempFile: File
     private var invokeParam: InvokeParam? = null
 
+    private val mUploadManager: UploadManager by lazy { UploadManager() }
+
+    private var mLocalFileUrl: String? = null
+    private var mRemoteFileUrl: String? = null
+
+    private var mUserIcon: String? = null
+    private var mUserName: String? = null
+    private var mUserMobile: String? = null
+    private var mUserGender: String? = null
+    private var mUserSign: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +107,8 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView, Vie
     override fun takeSuccess(result: TResult?) {
         Log.d("TakePhoto", result?.image?.originalPath)
         Log.d("TakePhoto", result?.image?.compressPath)
+        mLocalFileUrl = result?.image?.compressPath
+        mPresenter.getUploadToken()
     }
 
     override fun takeCancel() {
@@ -102,6 +117,14 @@ class UserInfoActivity : BaseMvpActivity<UserInfoPresenter>(), UserInfoView, Vie
     override fun takeFail(result: TResult?, msg: String?) {
         Log.e("takePhoto", msg)
 
+    }
+
+    override fun onGetUploadTokenResult(result: String) {
+        mUploadManager.put(mLocalFileUrl, null, result, { _, _, response ->
+            mRemoteFileUrl = BaseConstant.IMAGE_SERVER_ADDRESS + response?.get("hash")
+            Log.d("RemoteImage", mRemoteFileUrl)
+            GlideUtils.loadUrlImage(this, mRemoteFileUrl!!, mUserIconIv)
+        }, null)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

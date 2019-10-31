@@ -7,6 +7,9 @@ package com.kotlin.base.common
 class BaseConstant {
 
     companion object {
+        //七牛服务地址
+        const val IMAGE_SERVER_ADDRESS = "http://q08b5uk0v.bkt.clouddn.com/"
+
         //本地服务器地址
         const val SERVER_ADDRESS = "http://192.168.0.87:8080"
 
