@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
+import com.kotlin.goods.ui.fragment.CategoryFragment
 import com.kotlin.mall.fragment.HomeFragment
 import com.kotlin.mall.fragment.MeFragment
 import com.wz.kotlinmall.R
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     //主界面Fragment
     private val mHomeFragment by lazy { HomeFragment() }
     //商品分类Fragment
-    private val mCategoryFragment by lazy { MeFragment() }
+    private val mCategoryFragment by lazy { CategoryFragment() }
     //购物车Fragment
     private val mCartFragment by lazy { MeFragment() }
     //消息Fragment
