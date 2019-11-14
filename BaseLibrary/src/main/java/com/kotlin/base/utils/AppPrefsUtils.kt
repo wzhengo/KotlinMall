@@ -82,9 +82,11 @@ object AppPrefsUtils {
      */
     fun putStringSet(key: String, set: Set<String>) {
         val localSet = getStringSet(key)?.toMutableSet()
-        localSet?.addAll(set)
-        ed.putStringSet(key, localSet)
-        ed.commit()
+        if (localSet != null) {
+            localSet.addAll(set)
+            ed.putStringSet(key, localSet)
+            ed.commit()
+        }
     }
 
     /*

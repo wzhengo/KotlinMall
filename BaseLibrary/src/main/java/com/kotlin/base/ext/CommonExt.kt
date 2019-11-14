@@ -96,6 +96,6 @@ fun MultiStateView.startLoading() {
     (animBackground as AnimationDrawable).start()
 }
 
-fun View.setVisible(visible: Boolean) {
-    this.visibility = if (visible) View.VISIBLE else View.GONE
+fun View.setVisible(visible: Boolean?) {
+    this.visibility = if (visible != null && visible) View.VISIBLE else View.GONE
 }
