@@ -10,8 +10,8 @@ import com.kotlin.base.ui.fragment.BaseFragment
 import com.kotlin.base.utils.AppPrefsUtils
 import com.kotlin.mall.activity.SettingActivity
 import com.kotlin.provider.common.ProviderConstant
+import com.kotlin.provider.common.afterLogin
 import com.kotlin.provider.common.isLogined
-import com.kotlin.user.ui.activity.LoginActivity
 import com.kotlin.user.ui.activity.UserInfoActivity
 import com.wz.kotlinmall.R
 import kotlinx.android.synthetic.main.fragment_me.*
@@ -73,11 +73,8 @@ class MeFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.mUserIconIv, R.id.mUserNameTv -> {
-
-                if (isLogined()) {
+                afterLogin {
                     startActivity<UserInfoActivity>()
-                } else {
-                    startActivity<LoginActivity>()
                 }
             }
             R.id.mSettingTv -> {
