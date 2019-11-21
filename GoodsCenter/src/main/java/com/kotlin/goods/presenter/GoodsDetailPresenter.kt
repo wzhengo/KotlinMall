@@ -3,8 +3,11 @@ package com.kotlin.goods.presenter
 import com.kotlin.base.ext.execute
 import com.kotlin.base.presenter.BasePresenter
 import com.kotlin.base.rx.BaseSubscriber
+import com.kotlin.base.utils.AppPrefsUtils
+import com.kotlin.goods.common.GoodsConstant
 import com.kotlin.goods.data.protocol.Goods
 import com.kotlin.goods.presenter.view.GoodsDetailView
+import com.kotlin.goods.service.CartService
 import com.kotlin.goods.service.GoodsService
 import javax.inject.Inject
 
@@ -15,6 +18,9 @@ class GoodsDetailPresenter @Inject constructor() : BasePresenter<GoodsDetailView
 
     @Inject
     lateinit var goodsService: GoodsService
+
+    @Inject
+    lateinit var cartService: CartService
 
     /*
         获取商品详情

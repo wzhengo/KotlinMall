@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     //商品分类Fragment
     private val mCategoryFragment by lazy { CategoryFragment() }
     //购物车Fragment
-    private val mCartFragment by lazy { MeFragment() }
+    private val mCartFragment by lazy { CartFragment() }
     //消息Fragment
     private val mMsgFragment by lazy { MeFragment() }
     //"我的"Fragment
