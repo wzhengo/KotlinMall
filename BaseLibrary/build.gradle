@@ -82,4 +82,6 @@ dependencies {
     api 'com.zhy:flowlayout-lib:1.0.3'
     //ARouter
     api "com.alibaba:arouter-api:$arouter_api_version"
+    //BadgeView
+    api 'q.rorbin:badgeview:1.1.2'
 }

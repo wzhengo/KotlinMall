@@ -15,6 +15,7 @@ import com.kotlin.base.widgets.DefaultTextWatcher
 import com.kotlin.goods.R
 import com.kotlin.goods.common.GoodsConstant
 import com.kotlin.goods.data.protocol.GoodsSku
+import com.kotlin.goods.event.AddCartEvent
 import com.kotlin.goods.event.SkuChangedEvent
 import com.kotlin.goods.getEditText
 import kotlinx.android.synthetic.main.layout_sku_pop.view.*
@@ -74,8 +75,12 @@ class GoodsSkuPopView(context: Activity) : PopupWindow(context), View.OnClickLis
                     Bus.send(SkuChangedEvent())
                 }
             }
-
         )
+
+        mRootView.mAddCartBtn.onClick {
+            Bus.send(AddCartEvent())
+            dismiss()
+        }
 
     }
 

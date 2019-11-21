@@ -4,6 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
+import com.eightbitlab.rxbus.Bus
+import com.eightbitlab.rxbus.registerInBus
+import com.kotlin.base.utils.AppPrefsUtils
+import com.kotlin.goods.common.GoodsConstant
+import com.kotlin.goods.event.UpdateCartSizeEvent
+import com.kotlin.goods.ui.fragment.CartFragment
 import com.kotlin.goods.ui.fragment.CategoryFragment
 import com.kotlin.mall.fragment.HomeFragment
 import com.kotlin.mall.fragment.MeFragment
@@ -35,7 +41,8 @@ class MainActivity : AppCompatActivity() {
         initFragment()
         initBottomNav()
         changeFragment(0)
-
+        initObserve()
+        loadCartSize()
     }
 
     /*
@@ -87,4 +94,28 @@ class MainActivity : AppCompatActivity() {
         manager.show(mStack[position])
         manager.commit()
     }
+
+    /*
+        初始化监听，购物车数量变化及消息标签是否显示
+     */
+    private fun initObserve(){
+        Bus.observe<UpdateCartSizeEvent>()
+            .subscribe {
+                loadCartSize()
+            }.registerInBus(this)
+    }
+
+
+    /*
+        加载购物车数量
+     */
+    private fun loadCartSize(){
+        mBottomNavBar.checkCartBadge(AppPrefsUtils.getInt(GoodsConstant.SP_CART_SIZE))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Bus.unregister(this)
+    }
+
 }

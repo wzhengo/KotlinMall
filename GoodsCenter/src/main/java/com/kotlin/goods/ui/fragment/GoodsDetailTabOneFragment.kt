@@ -16,8 +16,10 @@ import com.kotlin.base.widgets.BannerImageLoader
 import com.kotlin.goods.R
 import com.kotlin.goods.common.GoodsConstant
 import com.kotlin.goods.data.protocol.Goods
+import com.kotlin.goods.event.AddCartEvent
 import com.kotlin.goods.event.GoodsDetailImageEvent
 import com.kotlin.goods.event.SkuChangedEvent
+import com.kotlin.goods.event.UpdateCartSizeEvent
 import com.kotlin.goods.injection.component.DaggerGoodsComponent
 import com.kotlin.goods.injection.module.GoodsModule
 import com.kotlin.goods.presenter.GoodsDetailPresenter
@@ -83,6 +85,11 @@ class GoodsDetailTabOneFragment : BaseMvpFragment<GoodsDetailPresenter>(), Goods
             .subscribe {
                 mSkuSelectedTv.text =
                     mSkuPop.getSelectSku() + GoodsConstant.SKU_SEPARATOR + mSkuPop.getSelectCount() + "件"
+            }.registerInBus(this)
+
+        Bus.observe<AddCartEvent>()
+            .subscribe{
+                addCart()
             }.registerInBus(this)
     }
 
@@ -159,10 +166,29 @@ class GoodsDetailTabOneFragment : BaseMvpFragment<GoodsDetailPresenter>(), Goods
     }
 
     override fun onAddCartResult(result: Int) {
+        Bus.send(UpdateCartSizeEvent())
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Bus.unregister(this)
+    }
+
+
+    /*
+        加入购物车
+     */
+    private fun addCart() {
+        mCurGoods?.let {
+            mPresenter.addCart(
+                it.id,
+                it.goodsDesc,
+                it.goodsDefaultIcon,
+                it.goodsDefaultPrice,
+                mSkuPop.getSelectCount(),
+                mSkuPop.getSelectSku()
+            )
+        }
+
     }
 }
