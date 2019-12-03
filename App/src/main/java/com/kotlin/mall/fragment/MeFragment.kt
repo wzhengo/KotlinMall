@@ -9,6 +9,7 @@ import com.kotlin.base.ext.onClick
 import com.kotlin.base.ui.fragment.BaseFragment
 import com.kotlin.base.utils.AppPrefsUtils
 import com.kotlin.mall.activity.SettingActivity
+import com.kotlin.order.ui.activity.ShipAddressActivity
 import com.kotlin.provider.common.ProviderConstant
 import com.kotlin.provider.common.afterLogin
 import com.kotlin.provider.common.isLogined
@@ -16,6 +17,7 @@ import com.kotlin.user.ui.activity.UserInfoActivity
 import com.wz.kotlinmall.R
 import kotlinx.android.synthetic.main.fragment_me.*
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.toast
 
 /*
     "我的"界面
@@ -79,6 +81,15 @@ class MeFragment : BaseFragment(), View.OnClickListener {
             }
             R.id.mSettingTv -> {
                 startActivity<SettingActivity>()
+            }
+            R.id.mAddressTv -> {
+                afterLogin {
+                    startActivity<ShipAddressActivity>()
+                }
+            }
+
+            R.id.mShareTv -> {
+                toast(R.string.coming_soon_tip)
             }
         }
     }

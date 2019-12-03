@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
 import com.kennyc.view.MultiStateView
@@ -25,6 +26,8 @@ import com.kotlin.goods.injection.module.CartModule
 import com.kotlin.goods.presenter.CartListPresenter
 import com.kotlin.goods.presenter.view.CartListView
 import com.kotlin.goods.ui.adapter.CartGoodsAdapter
+import com.kotlin.provider.common.ProviderConstant
+import com.kotlin.provider.router.RouterPath
 import kotlinx.android.synthetic.main.fragment_cart.*
 import org.jetbrains.anko.support.v4.ctx
 import org.jetbrains.anko.support.v4.toast
@@ -209,10 +212,9 @@ class CartFragment : BaseMvpFragment<CartListPresenter>(), CartListView {
         提交购物车回调
      */
     override fun onSubmitCartListResult(result: Int) {
-        toast("订单id:$result")
-//        ARouter.getInstance().build(RouterPath.OrderCenter.PATH_ORDER_CONFIRM)
-//            .withInt(ProviderConstant.KEY_ORDER_ID,result)
-//            .navigation()
+        ARouter.getInstance().build(RouterPath.OrderCenter.PATH_ORDER_CONFIRM)
+            .withInt(ProviderConstant.KEY_ORDER_ID,result)
+            .navigation()
     }
 
     /*
