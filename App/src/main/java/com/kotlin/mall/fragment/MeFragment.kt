@@ -9,6 +9,9 @@ import com.kotlin.base.ext.onClick
 import com.kotlin.base.ui.fragment.BaseFragment
 import com.kotlin.base.utils.AppPrefsUtils
 import com.kotlin.mall.activity.SettingActivity
+import com.kotlin.order.common.OrderConstant
+import com.kotlin.order.common.OrderStatus
+import com.kotlin.order.ui.activity.OrderActivity
 import com.kotlin.order.ui.activity.ShipAddressActivity
 import com.kotlin.provider.common.ProviderConstant
 import com.kotlin.provider.common.afterLogin
@@ -77,6 +80,20 @@ class MeFragment : BaseFragment(), View.OnClickListener {
             R.id.mUserIconIv, R.id.mUserNameTv -> {
                 afterLogin {
                     startActivity<UserInfoActivity>()
+                }
+            }
+            R.id.mWaitPayOrderTv -> {
+                startActivity<OrderActivity>(OrderConstant.KEY_ORDER_STATUS to OrderStatus.ORDER_WAIT_PAY)
+            }
+            R.id.mWaitConfirmOrderTv -> {
+                startActivity<OrderActivity>(OrderConstant.KEY_ORDER_STATUS to OrderStatus.ORDER_WAIT_CONFIRM)
+            }
+            R.id.mCompleteOrderTv -> {
+                startActivity<OrderActivity>(OrderConstant.KEY_ORDER_STATUS to OrderStatus.ORDER_COMPLETED)
+            }
+            R.id.mAllOrderTv -> {
+                afterLogin {
+                    startActivity<OrderActivity>()
                 }
             }
             R.id.mSettingTv -> {
