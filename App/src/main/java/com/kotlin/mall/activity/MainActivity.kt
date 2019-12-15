@@ -13,6 +13,8 @@ import com.kotlin.goods.ui.fragment.CartFragment
 import com.kotlin.goods.ui.fragment.CategoryFragment
 import com.kotlin.mall.fragment.HomeFragment
 import com.kotlin.mall.fragment.MeFragment
+import com.kotlin.message.ui.fragment.MessageFragment
+import com.kotlin.provider.event.MessageBadgeEvent
 import com.wz.kotlinmall.R
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     //购物车Fragment
     private val mCartFragment by lazy { CartFragment() }
     //消息Fragment
-    private val mMsgFragment by lazy { MeFragment() }
+    private val mMsgFragment by lazy { MessageFragment() }
     //"我的"Fragment
     private val mMeFragment by lazy { MeFragment() }
 
@@ -102,6 +104,12 @@ class MainActivity : AppCompatActivity() {
         Bus.observe<UpdateCartSizeEvent>()
             .subscribe {
                 loadCartSize()
+            }.registerInBus(this)
+        Bus.observe<MessageBadgeEvent>()
+            .subscribe { t: MessageBadgeEvent ->
+                run {
+                    mBottomNavBar.checkMsgBadge(t.isVisible)
+                }
             }.registerInBus(this)
     }
 

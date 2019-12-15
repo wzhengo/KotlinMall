@@ -3,7 +3,7 @@
     package="com.wz.kotlinmall">
 
     <application
-        android:name="com.kotlin.base.common.BaseApplication"
+        android:name="com.kotlin.mall.common.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
