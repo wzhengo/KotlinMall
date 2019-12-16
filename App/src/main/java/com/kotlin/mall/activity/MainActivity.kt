@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.eightbitlab.rxbus.Bus
 import com.eightbitlab.rxbus.registerInBus
+import com.kotlin.base.common.AppManager
 import com.kotlin.base.utils.AppPrefsUtils
 import com.kotlin.goods.common.GoodsConstant
 import com.kotlin.goods.event.UpdateCartSizeEvent
@@ -17,10 +18,12 @@ import com.kotlin.message.ui.fragment.MessageFragment
 import com.kotlin.provider.event.MessageBadgeEvent
 import com.wz.kotlinmall.R
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private var pressTime: Long = 0
 
     //Fragment 栈管理
     private val mStack = Stack<Fragment>()
@@ -126,4 +129,16 @@ class MainActivity : AppCompatActivity() {
         Bus.unregister(this)
     }
 
+    /*
+        重写Back事件，双击退出
+     */
+    override fun onBackPressed() {
+        val time = System.currentTimeMillis()
+        if (time - pressTime > 2000) {
+            toast("再按一次退出程序")
+            pressTime = time
+        } else {
+            AppManager.instance.exitApp(this)
+        }
+    }
 }
